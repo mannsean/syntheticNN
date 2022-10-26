@@ -119,7 +119,7 @@ class SyntheticNearestNeighbors:
         (n_rows, n_cols) = B.shape
         if B.count_nonzero() == n_rows * n_cols:
             return (obs_rows, obs_cols)
-        B = B.todense()
+        B = B.toarray()
 
         # bipartite graph
         A = np.block([[np.ones((n_rows, n_rows)), B], [B.T, np.ones((n_cols, n_cols))]])
@@ -231,9 +231,9 @@ class SyntheticNearestNeighbors:
         """
         # initialize
         (missing_row, missing_col) = missing_pair
-        y1 = X[missing_row, anchor_cols].todense()
-        X1 = X[anchor_rows][:, anchor_cols].todense()
-        X2 = X[anchor_rows, missing_col].todense()
+        y1 = X[missing_row, anchor_cols].toarray().flatten()
+        X1 = X[anchor_rows][:, anchor_cols].toarray()
+        X2 = X[anchor_rows, missing_col].toarray().flatten()
 
         # add covariates
         if covariates is not None:
